@@ -1,0 +1,62 @@
+{
+  "format": 1,
+  "restore": {
+    "G:\\codes - 2\\Mario\\backend\\backend.csproj": {}
+  },
+  "projects": {
+    "G:\\codes - 2\\Mario\\backend\\backend.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "G:\\codes - 2\\Mario\\backend\\backend.csproj",
+        "projectName": "backend",
+        "projectPath": "G:\\codes - 2\\Mario\\backend\\backend.csproj",
+        "packagesPath": "C:\\Users\\i ball\\.nuget\\packages\\",
+        "outputPath": "G:\\codes - 2\\Mario\\backend\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\i ball\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files (x86)\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
