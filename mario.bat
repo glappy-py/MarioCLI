@@ -16,12 +16,17 @@ if %1==todo (
     echo %2 >> todolist.txt
 )
 if %1==list (
-    set /A counter = 1
     FOR /F "tokens=* delims=" %%x in (todolist.txt) DO (
-        echo %counter% %%x
-        set %counter% = %counter% + 1
+        echo %%x
     )
-    set /A counter = 1
+    echo %*
+)
+if %1==todo (
+    set direc = %CD%
+    cd /d "%~dp0\backend\"
+    dotnet run addtodo %*
+    cd /d "%direc%"
+
 )
 if %1==terminate (
     echo [91mshutting down system[0m
