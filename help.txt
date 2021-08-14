@@ -1,0 +1,10 @@
+commands - functions
+
+mario start       open VScode at the current directory
+mario node        initialize a nodejs project at the current working directory
+mario react       initialize a reactjs project at the current working directory
+mario install     install a nodejs package 
+mario make        create an empty file (similar to ls in linux)
+mario expo        initialize an expo project at the current working directory
+mario join        execute zoom bot and join a meeting
+mario terminate   terminate the machine
