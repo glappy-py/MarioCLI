@@ -12,20 +12,22 @@ if %1==join (
 @REM TODO: add tutorial text for making a new mario command
 @REM TODO: store the commands in .txt file in an encrypted form
 @REM TODO: make a mario built in todo list (tasks tracker)
-if %1==todo (
-    echo %2 >> todolist.txt
-)
 if %1==list (
+    cd /d "%~dp0\"
     FOR /F "tokens=* delims=" %%x in (todolist.txt) DO (
         echo %%x
     )
-    echo %*
 )
 if %1==todo (
-    set direc = %CD%
-    cd /d "%~dp0\backend\"
+    set direc = "%CD%"
+    cd /d "%~dp0backend\"
+    echo %*
     dotnet run addtodo %*
-    cd /d "%direc%"
+    cd /d %direc%
+)
+if %1==done (
+    cd /d "%~dp0\backend\"
+    dotnet run removetodo %*
 
 )
 if %1==terminate (
