@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "8R8gQv+l27HsDPiaB/X58mBWTa/Cft8t3r53ykh3fZa0thOdaVIT6VlvLcVFEMjgRODZRFU/1NxTBUPXXtN5gw==",
+  "dgSpecHash": "y+4cCDNC3tBgxfpAYTWuImb1oseYDqWsj2y2mei6XiIY95J9BNMnSQI8GQ3b7srfqRD4HzSjEVjrgtI7ExonwQ==",
   "success": true,
   "projectFilePath": "G:\\codes - 2\\Mario\\backend\\backend.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\i ball\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\5.0.9\\microsoft.netcore.app.runtime.win-x64.5.0.9.nupkg.sha512",
+    "C:\\Users\\i ball\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\5.0.9\\microsoft.windowsdesktop.app.runtime.win-x64.5.0.9.nupkg.sha512",
+    "C:\\Users\\i ball\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\5.0.9\\microsoft.aspnetcore.app.runtime.win-x64.5.0.9.nupkg.sha512"
+  ],
   "logs": []
 }

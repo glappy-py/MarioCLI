@@ -11,7 +11,7 @@ if %1==join (
 @REM TODO: make a gitbook about mario 
 @REM TODO: add tutorial text for making a new mario command
 @REM TODO: store the commands in .txt file in an encrypted form
-@REM TODO: make a mario built in todo list (tasks tracker)
+@REM TODO: make a command "mario about" which takes the user to marioCLI's gitbook
 if %1==list (
     cd /d "%~dp0\"
     FOR /F "tokens=* delims=" %%x in (todolist.txt) DO (
@@ -19,16 +19,10 @@ if %1==list (
     )
 )
 if %1==todo (
-    set direc = "%CD%"
-    cd /d "%~dp0backend\"
-    echo %*
-    dotnet run addtodo %*
-    cd /d %direc%
+    "%~dp0backend\bin\Debug\net5.0\backend.exe" addtodo %*
 )
 if %1==done (
-    cd /d "%~dp0\backend\"
-    dotnet run removetodo %*
-
+    "%~dp0backend\bin\Debug\net5.0\backend.exe" removetodo %*
 )
 if %1==terminate (
     echo [91mshutting down system[0m
@@ -43,8 +37,7 @@ if %1==migrate (
     cd /d "G:\codes - 2"
 )
 if %1==download (
-    cd /d "%~dp0\Shortcuts\"
-    downloader.lnk
+    "%~dp0\Shortcuts\downloader.lnk"
     exit
 )
 if %1==help (
