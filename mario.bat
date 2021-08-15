@@ -36,10 +36,7 @@ if %1==start (
 if %1==migrate (
     cd /d "G:\codes - 2"
 )
-if %1==download (
-    "%~dp0\Shortcuts\downloader.lnk"
-    exit
-)
+
 if %1==help (
     cd /d "G:\codes - 2\Mario\"
     FOR /F "tokens=* delims=" %%x in (help.txt) DO (echo %%x)
