@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 namespace backend
 {
     class Program
@@ -17,60 +18,67 @@ namespace backend
         static void Main(string[] args)
         {
             List<string> TempArgs = new List<string>(args);
-            string path = Directory.GetCurrentDirectory();
-            string cwd = System.Environment.CurrentDirectory;
-            path = path.Remove(18);
-            try{
-                string command = TempArgs[0];
-                TempArgs.RemoveAt(0);
-                string[] Args = TempArgs.ToArray();
-                if (command == "todo"){
-                    addTodo(Args,path);
-                }
-                if (command == "done"){
-                    removeTodo(Args,path);
-                }
-                if (command == "list"){
-                    listTodoTasks(Args,path);
-                }
-                if (command == "terminate"){
-                    terminateSystem();
-                }
-                if (command == "start"){
-                    marioStart(cwd);
-                }
-                if (command == "help"){
-                    help(path);
-                }
-                if (command == "make"){
-                    Console.WriteLine(cwd);
-                    makeFile(cwd,Args);
-                }
-                if (command  == "install"){
-                    installNPMPackage(cwd,Args);
-                }
-                if (command == "react"){
-                    initializeReactJSProject(Args,cwd);
-                }
-                if (command == "node"){
-                    initializeNodeJSProject(Args,cwd,path);
-                }
+            string path = TempArgs[0];
+            TempArgs.RemoveAt(0);
+            string cwd = Directory.GetCurrentDirectory();
+            cwd = cwd + @"\";
+            int counter = 0;
+            foreach (string item in TempArgs.ToArray())
+            {
+                counter++;
             }
-            catch(System.Exception){
-                Console.Write("use ");
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("mario help ");
-                Console.ForegroundColor = ConsoleColor.Gray;
-                Console.WriteLine("to get a list of mario commands");
-            }
+            Console.WriteLine(counter);
+            // if (TempArgs.Count == 0){
+            //     Console.WriteLine(TempArgs.Count);
+            //     Console.Write("use ");
+            //     Console.ForegroundColor = ConsoleColor.Green;
+            //     Console.Write("mario help ");
+            //     Console.ForegroundColor = ConsoleColor.Gray;
+            //     Console.WriteLine("to get a list of mario commands");
+            // }
+            // if (TempArgs.Count > 0) {
+            //     string command = TempArgs[0];
+            //     TempArgs.RemoveAt(0);
+            //     string[] Args = TempArgs.ToArray();
+            //     if (command == "todo"){
+            //         addTodo(Args,path);
+            //     }
+            //     if (command == "done"){
+            //         removeTodo(Args,path);
+            //     }
+            //     if (command == "list"){
+            //         listTodoTasks(Args,path);
+            //     }
+            //     if (command == "terminate"){
+            //         terminateSystem();
+            //     }
+            //     if (command == "start"){
+            //         marioStart(cwd);
+            //     }
+            //     if (command == "help"){
+            //         help(path);
+            //     }
+            //     if (command == "make"){
+            //         makeFile(cwd,Args);
+            //     }
+            //     if (command  == "install"){
+            //         installNPMPackage(cwd,Args);
+            //     }
+            //     if (command == "react"){
+            //         initializeReactJSProject(Args,cwd);
+            //     }
+            //     if (command == "node"){
+            //         initializeNodeJSProject(Args,cwd,path);
+            //     }
+            // }
             
         }
         // Function for adding todo tasks
         static void addTodo(string[] args,string path){
-            StreamReader todoreader = new StreamReader(path + @"\todolist.txt");
+            StreamReader todoreader = new StreamReader(path + @"todolist.txt");
             List<string> todolist = new List<string>(todoreader.ReadToEnd().Split("\n"));
             todoreader.Close();
-            StreamWriter todowriter = new StreamWriter(path + @"\todolist.txt",true,Encoding.ASCII);
+            StreamWriter todowriter = new StreamWriter(path + @"todolist.txt",true,Encoding.ASCII);
             string todo = "";
             foreach (string item in args)
             {
@@ -92,10 +100,10 @@ namespace backend
             Console.ForegroundColor = ConsoleColor.Gray;
         }
         static void removeTodo(string[] args,string path){
-            StreamReader todoreader = new StreamReader(path + @"\todolist.txt");
+            StreamReader todoreader = new StreamReader(path + @"todolist.txt");
             List<string> todolist = new List<string>(todoreader.ReadToEnd().Split("\n"));
             todoreader.Close();
-            StreamWriter todowriter = new StreamWriter(path + @"\todolist.txt",false,Encoding.ASCII);
+            StreamWriter todowriter = new StreamWriter(path + @"todolist.txt",false,Encoding.ASCII);
             List<string> parsedArgs = new List<string>(args);
             parsedArgs.Remove("done");
             parsedArgs.Remove("removetodo");
@@ -121,7 +129,7 @@ namespace backend
             todowriter.Close();
         }
         static void listTodoTasks(string[] args,string path){
-            StreamReader todoreader = new StreamReader(path + @"\todolist.txt");
+            StreamReader todoreader = new StreamReader(path + @"todolist.txt");
             Console.Write(todoreader.ReadToEnd());
             todoreader.Close();
         }
@@ -136,12 +144,12 @@ namespace backend
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/c cd /d \"" + cwd + "\" && code .";
+            startInfo.Arguments = "/c cd /d \"" + cwd + " && code .";
             process.StartInfo = startInfo;
             process.Start();
         }
         static void help(string path){
-            StreamReader helpReader = new StreamReader(path + @"\help.txt");
+            StreamReader helpReader = new StreamReader(path + @"help.txt");
             Console.Write(helpReader.ReadToEnd());
             helpReader.Close();
         }
@@ -153,10 +161,10 @@ namespace backend
                 Console.Write("please provide a name for your nodeJS project : ");
                 directoryName = Console.ReadLine();
             }
-            Directory.CreateDirectory(cwd + @"\" + directoryName);
-            File.Create(cwd + @"\" + directoryName + @"\index.js");
-            File.Create(cwd + @"\" + directoryName + @"\package.json");
-            StreamWriter packageWriter = new StreamWriter(cwd + @"\" + directoryName + @"\package.json",false,Encoding.ASCII);
+            Directory.CreateDirectory(cwd + directoryName);
+            File.Create(cwd + directoryName + @"index.js");
+            File.Create(cwd + directoryName + @"package.json");
+            StreamWriter packageWriter = new StreamWriter(cwd + directoryName + @"package.json",false,Encoding.ASCII);
             StreamReader packageReader = new StreamReader(path + @"package.json");
             packageWriter.WriteLine("{");
             packageWriter.WriteLine("  \"name\": \"" + directoryName + "\",");
@@ -182,7 +190,7 @@ namespace backend
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/c cd /d \"" + cwd + "\" && npx create-react-app " + directoryName + " && cd " + directoryName;
+            startInfo.Arguments = "/c cd /d \"" + cwd + " && npx create-react-app " + directoryName + " && cd " + directoryName;
             process.StartInfo = startInfo;
             process.Start();
             Console.ForegroundColor = ConsoleColor.Green;
@@ -197,7 +205,7 @@ namespace backend
                 System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
                 startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                 startInfo.FileName = "cmd.exe";
-                startInfo.Arguments = "/c cd /d \"" + cwd + "\" && npm install " + package;
+                startInfo.Arguments = "/c cd /d \"" + cwd + " && npm install " + package;
                 process.StartInfo = startInfo;
                 process.Start();
             }
@@ -207,7 +215,7 @@ namespace backend
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/c cd /d \"" + cwd + "\" && echo .> " + args[0];
+            startInfo.Arguments = "/c cd /d \"" + cwd + " && echo .> " + args[0];
             process.StartInfo = startInfo;
             process.Start();
             Console.Write("created ");
