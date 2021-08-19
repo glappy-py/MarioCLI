@@ -154,13 +154,14 @@ namespace backend
                 directoryName = Console.ReadLine();
             }
             Directory.CreateDirectory(cwd + directoryName);
-            File.Create(cwd + directoryName + @"index.js");
-            File.Create(cwd + directoryName + @"package.json");
-            StreamWriter packageWriter = new StreamWriter(cwd + directoryName + @"package.json",false,Encoding.ASCII);
-            StreamReader packageReader = new StreamReader(path + @"package.json");
-            packageWriter.WriteLine("{");
-            packageWriter.WriteLine("  \"name\": \"" + directoryName + "\",");
+            File.Create(cwd + directoryName + @"\index.js");
+            StreamWriter packageWriter = new StreamWriter(cwd + directoryName + @"\package.json",false,Encoding.ASCII);
+            StreamReader packageReader = new StreamReader(path + @"package.txt");
+            packageWriter.WriteLineAsync("{");
+            packageWriter.WriteLineAsync("  \"name\": \"" + directoryName.ToLower() + "\",");
             packageWriter.WriteAsync(packageReader.ReadToEnd());
+            packageReader.Close();
+            packageWriter.Close();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("nodejs");
             Console.ForegroundColor = ConsoleColor.Gray;
