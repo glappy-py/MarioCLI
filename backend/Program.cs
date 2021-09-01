@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
+
 namespace backend
 {
     class Program
@@ -17,6 +18,8 @@ namespace backend
         // Arg conditions
         static void Main(string[] args)
         {
+            
+            System.Diagnostics.Debug.WriteLine("ok");
             List<string> TempArgs = new List<string>(args);
             string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             path = path.Remove(19);
@@ -56,6 +59,12 @@ namespace backend
                 if (command == "node"){
                     initializeNodeJSProject(Args,cwd,path);
                 }
+                if (command == "join"){
+                    executeZoomBot(Args,path);
+                }
+                if (command == "configure"){
+                    configure(Args,path);
+                }
             } else {
                 Console.Write("use ");
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -67,10 +76,10 @@ namespace backend
         }
         // Function for adding todo tasks
         static void addTodo(string[] args,string path){
-            StreamReader todoreader = new StreamReader(path + @"todolist.txt");
+            StreamReader todoreader = new StreamReader(path + @"\backend\txts\todolist.txt");
             List<string> todolist = new List<string>(todoreader.ReadToEnd().Split("\n"));
             todoreader.Close();
-            StreamWriter todowriter = new StreamWriter(path + @"todolist.txt",true,Encoding.ASCII);
+            StreamWriter todowriter = new StreamWriter(path + @"\backend\txts\todolist.txt",true,Encoding.ASCII);
             string todo = "";
             foreach (string item in args)
             {
@@ -92,10 +101,10 @@ namespace backend
             Console.ForegroundColor = ConsoleColor.Gray;
         }
         static void removeTodo(string[] args,string path){
-            StreamReader todoreader = new StreamReader(path + @"todolist.txt");
+            StreamReader todoreader = new StreamReader(path + @"\backend\txts\todolist.txt");
             List<string> todolist = new List<string>(todoreader.ReadToEnd().Split("\n"));
             todoreader.Close();
-            StreamWriter todowriter = new StreamWriter(path + @"todolist.txt",false,Encoding.ASCII);
+            StreamWriter todowriter = new StreamWriter(path + @"\backend\txts\todolist.txt",false,Encoding.ASCII);
             List<string> parsedArgs = new List<string>(args);
             parsedArgs.Remove("done");
             parsedArgs.Remove("removetodo");
@@ -121,7 +130,7 @@ namespace backend
             todowriter.Close();
         }
         static void listTodoTasks(string[] args,string path){
-            StreamReader todoreader = new StreamReader(path + @"todolist.txt");
+            StreamReader todoreader = new StreamReader(path + @"\backend\txts\todolist.txt");
             Console.Write(todoreader.ReadToEnd());
             todoreader.Close();
         }
@@ -141,7 +150,7 @@ namespace backend
             process.Start();
         }
         static void help(string path){
-            StreamReader helpReader = new StreamReader(path + @"help.txt");
+            StreamReader helpReader = new StreamReader(path + @"\backend\txts\help.txt");
             Console.Write(helpReader.ReadToEnd());
             helpReader.Close();
         }
@@ -156,7 +165,7 @@ namespace backend
             Directory.CreateDirectory(cwd + directoryName);
             File.Create(cwd + directoryName + @"\index.js");
             StreamWriter packageWriter = new StreamWriter(cwd + directoryName + @"\package.json",false,Encoding.ASCII);
-            StreamReader packageReader = new StreamReader(path + @"package.txt");
+            StreamReader packageReader = new StreamReader(path + @"\backend\txts\package.txt");
             packageWriter.WriteLineAsync("{");
             packageWriter.WriteLineAsync("  \"name\": \"" + directoryName.ToLower() + "\",");
             packageWriter.WriteAsync(packageReader.ReadToEnd());
@@ -218,5 +227,54 @@ namespace backend
             Console.WriteLine(" at " + cwd);
         }
         // Experimental code
+        static void executeZoomBot(string[] args,string path){
+            // Executing zoom bot
+            Console.WriteLine("executing zoom bot");
+            
+        }
+
+        static void configure(string[] args,string path){
+            if (args[0] == "zoom"){
+                configureZoomPath(path);
+            }
+        }
+        static void configureZoomPath(string path){
+            string zoomPath;
+            StreamReader pathReader = new StreamReader(path + @"\backend\txts\path.txt");
+            zoomPath = pathReader.ReadLine();
+            pathReader.Close();
+            FileInfo zoomInfo = new FileInfo(zoomPath + @"\Zoom.exe");
+            if (zoomInfo.Exists){
+                Console.Write("zoom directory ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine(" is configured");
+                Console.ForegroundColor = ConsoleColor.Gray;
+            } else {
+                Console.Write("zoom directory ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" is not configured");
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write("Enter the absolute path of the zoom executable file : ");
+                zoomPath = Console.ReadLine();
+                StreamWriter pathWriter = new StreamWriter(path + @"\backend\txts\path.txt");
+                pathWriter.Write(zoomPath);
+                pathWriter.Close();
+            }
+            StreamReader helpreader = new StreamReader(path + @"\backend\txts\zoomConfigurationHelp.txt");
+            Console.Write(helpreader.ReadToEnd());
+            helpreader.Close();
+            configurationCommmandsPanel(path);
+        }
+        static void configurationCommandsPanel (string path){
+            Console.Write("command : ");
+            string[] commands = Console.ReadLine().Split(" ");
+            if (commands[0] == "gui"){
+                Console.WriteLine("opening zoom bot configuration panel");
+            } else if (commands[0] == "add"){
+                StreamWriter infoWriter = new StreamWriter(path + @"\backend\txts\info.txt",true);
+                infoWriter.Write(commands[1] + ":" + commands[2] + ":" + commands[3] + ":zoom");
+                infoWriter.Close();
+            }
+        }
     }
 }
