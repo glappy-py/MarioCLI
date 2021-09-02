@@ -8,7 +8,6 @@ namespace backend
 {
     class Program
     {
-        // TODO: complete executeZoomBot() and mario join
         // TODO: make a gitbook about mario 
         // TODO: make a command "mario about" which takes the user to marioCLI's gitbook
         // TODO: make a command "mario report" which the user can use to report a bug or suggest something
@@ -63,6 +62,9 @@ namespace backend
                 }
                 if (command == "configure"){
                     configure(Args,path);
+                }
+                if (command == "doctor"){
+                    doctor(path);
                 }
             } else {
                 Console.Write("use ");
@@ -259,7 +261,7 @@ namespace backend
                     meetingFound = true;
                     if (items[2] == "gmeet"){
                         executeMeetBot(items[1]);
-                    } else if (items[3] == "zoom"){
+                    } else {
                         executeZoomBot(args,path);
                     }
                 }
@@ -412,61 +414,43 @@ namespace backend
             Console.WriteLine(meetingName);
             Console.ForegroundColor = ConsoleColor.Gray;
         }
+        static void doctor(string path){
+            string zoomPath;
+            StreamReader pathReader = new StreamReader(path + @"\backend\txts\path.txt");
+            zoomPath = pathReader.ReadLine();
+            pathReader.Close();
+            FileInfo zoomInfo = new FileInfo(zoomPath + @"\Zoom.exe");
+            if (zoomInfo.Exists){
+                Console.Write("zoom bot is ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("configured");
+                Console.ForegroundColor = ConsoleColor.Gray;
+            } else {
+                Console.Write("zoom bot is ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("not configured");
+                Console.ForegroundColor = ConsoleColor.Gray;
+            }
+        }
         static void listMeetingEntries(string path,string[] commands){
             StreamReader infoReader = new StreamReader(path + @"\backend\txts\info.txt");
             int counter;
-            try {
-                if (commands[1] == "zoom"){
-                    Console.WriteLine("meeting name - meeting id - meeting pass");
-                    Console.WriteLine();
-                    counter = 1;
-                    foreach (string item in infoReader.ReadToEnd().Split("\n"))
-                    {
-                        string[] items = item.Split(":");
-                        if (items[3] == "zoom"){
-                            Console.Write(counter + ". ");
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(items[0] + " ");
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                            Console.WriteLine(items[1] + " " + items[2] + "\n");
-                            counter++;
-                        }
-                    }
-                } else if (commands[1] == "gmeet"){
-                    Console.WriteLine("meeting name - meeting id ");
-                    Console.WriteLine();
-                    counter = 1;
-                    foreach (string item in infoReader.ReadToEnd().Split("\n"))
-                    {
-                        string[] items = item.Split(":");
-                        if (items[3] == "gmeet"){
-                            Console.Write(counter + ". ");
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write(items[0] + " ");
-                            Console.ForegroundColor = ConsoleColor.Gray;
-                            Console.WriteLine(items[1] + "\n");
-                            counter++;
-                        }
-                    }
+            Console.WriteLine("meeting name - meeting id - meeting pass");
+            Console.WriteLine();
+            counter = 1;
+            foreach (string item in infoReader.ReadToEnd().Split("\n"))
+            {
+                string[] items = item.Split(":");
+                Console.Write(counter + ". ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write(items[0] + " ");
+                Console.ForegroundColor = ConsoleColor.Gray;
+                if (items[2] == "gmeet"){
+                    Console.WriteLine(items[1] + "\n");
+                } else {
+                    Console.WriteLine(items[1] + " " + items[2] + "\n");
                 }
-            } catch (IndexOutOfRangeException) {
-                Console.WriteLine("meeting name - meeting id - meeting pass");
-                Console.WriteLine();
-                counter = 1;
-                foreach (string item in infoReader.ReadToEnd().Split("\n"))
-                {
-                    string[] items = item.Split(":");
-                    Console.Write(counter + ". ");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write(items[0] + " ");
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    if (items[2] == "gmeet"){
-                        Console.WriteLine(items[1] + "\n");
-                    } else {
-                        Console.WriteLine(items[1] + " " + items[2] + "\n");
-                    }
-                    counter++;
-                }
+                counter++;
             }
             infoReader.Close();
             

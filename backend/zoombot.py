@@ -3,15 +3,13 @@ import pathlib
 # import datetime
 import pyautogui
 import pyscreeze 
-import pygetwindow as gw
 import keyboard
 import sys
 import numpy as np
-from time import sleep , time
+from time import sleep
 import subprocess
 import cv2
 # ------------------------
-startTime = time()
 # Declaring the var for id , pass and teacher's name
 id = None  
 npass = None # Named it npass instead of pass because pass is a reserved word for python
@@ -109,10 +107,8 @@ id , npass , name = manualJoin(userInput)
 subprocess.Popen(zoompath) # launching zoom
 
 # checking if zoom has launched yet
-print("waiting for zoom to launch")
 while locate("img\\join_button.png") == None and locate("img\\join_a_meeting.png") == None:
     pass
-    
 # checking if the user has signed in or not and locate the buttons accordingly
 try:
     join = locate("img\\join_button.png")
@@ -122,16 +118,10 @@ except Exception as e:
     join = locate("img\\join_a_meeting.png")
     # join = pyautogui.center(join)
     pyautogui.click(join[0],join[1])
-
-# showing class name , id and pass to user for cross correction
-print("joining " + name + " with id " + id + " and pass " + npass)
-
-
 # waiting for zoom to load
 while locate('img\\joining.png') == None:
     pass
     
-
 # entering id and pass 
 keyboard.write(str(id))
 pyautogui.press("enter")
@@ -140,8 +130,6 @@ while locate('img\\passcode.png') == None:
 keyboard.write(str(npass))
 pyautogui.press("enter")
 # --------------------
-endTime = time()
-print('execution took '+ str(round(endTime - startTime,2)) +'s')
 sleep(3)
 sys.exit() # closing zoom-bot.py
 # --------------------------------------------
