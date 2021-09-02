@@ -104,47 +104,44 @@ userInput = sys.argv[1]
 #         print("you don't have any class right now")
 #         sleep(3)
 #         sys.exit()
-# else :
-try:    
-    id , npass , name = manualJoin(userInput)
-    subprocess.Popen(zoompath) # launching zoom
+# else :  
+id , npass , name = manualJoin(userInput)
+subprocess.Popen(zoompath) # launching zoom
 
-    # checking if zoom has launched yet
-    print("waiting for zoom to launch")
-    while locate("img\\join_button.png") == None and locate("img\\join_a_meeting.png") == None:
-        pass
-        
-    # checking if the user has signed in or not and locate the buttons accordingly
-    try:
-        join = locate("img\\join_button.png")
-        # join = pyautogui.center(join)
-        pyautogui.click(join[0],join[1])
-    except Exception as e:
-        join = locate("img\\join_a_meeting.png")
-        # join = pyautogui.center(join)
-        pyautogui.click(join[0],join[1])
-
-    # showing class name , id and pass to user for cross correction
-    print("joining " + name + " with id " + id + " and pass " + npass)
-
-
-    # waiting for zoom to load
-    while locate('img\\joining.png') == None:
-        pass
-        
-
-    # entering id and pass 
-    keyboard.write(str(id))
-    pyautogui.press("enter")
-    while locate('img\\passcode.png') == None:
-        pass
-    keyboard.write(str(npass))
-    pyautogui.press("enter")
-    # --------------------
-    endTime = time()
-    print('execution took '+ str(round(endTime - startTime,2)) +'s')
-    sleep(3)
-    sys.exit() # closing zoom-bot.py
+# checking if zoom has launched yet
+print("waiting for zoom to launch")
+while locate("img\\join_button.png") == None and locate("img\\join_a_meeting.png") == None:
+    pass
+    
+# checking if the user has signed in or not and locate the buttons accordingly
+try:
+    join = locate("img\\join_button.png")
+    # join = pyautogui.center(join)
+    pyautogui.click(join[0],join[1])
 except Exception as e:
-    print("no entry found for " + sys.argv[1])
+    join = locate("img\\join_a_meeting.png")
+    # join = pyautogui.center(join)
+    pyautogui.click(join[0],join[1])
+
+# showing class name , id and pass to user for cross correction
+print("joining " + name + " with id " + id + " and pass " + npass)
+
+
+# waiting for zoom to load
+while locate('img\\joining.png') == None:
+    pass
+    
+
+# entering id and pass 
+keyboard.write(str(id))
+pyautogui.press("enter")
+while locate('img\\passcode.png') == None:
+    pass
+keyboard.write(str(npass))
+pyautogui.press("enter")
+# --------------------
+endTime = time()
+print('execution took '+ str(round(endTime - startTime,2)) +'s')
+sleep(3)
+sys.exit() # closing zoom-bot.py
 # --------------------------------------------

@@ -251,16 +251,21 @@ namespace backend
             StreamReader infoReader = new StreamReader(path + @"\backend\txts\info.txt");
             List<string> info = new List<string>(infoReader.ReadToEnd().Split("\n"));
             infoReader.Close();
+            bool meetingFound = false;
             foreach (string item in info.ToArray())
             {
                 string[] items = item.Split(":");
                 if (items[0] == args[0]){
+                    meetingFound = true;
                     if (items[2] == "gmeet"){
                         executeMeetBot(items[1]);
                     } else if (items[3] == "zoom"){
                         executeZoomBot(args,path);
                     }
                 }
+            }
+            if (!meetingFound){
+                Console.WriteLine("no meeting entry found for \'" + args[0] + "\'");
             }
         }
         static void configure(string[] args,string path){
@@ -354,13 +359,24 @@ namespace backend
                 Console.WriteLine("a meeting entry with name \'" + commands[1] + "\' already exists");
             } else {
                 StreamWriter infoWriter = new StreamWriter(path + @"\backend\txts\info.txt",true);
-                infoWriter.Write("\n" + commands[1] + ":" + commands[2] + ":" + commands[3] + platform == "zoom" ? ":zoom":":gmeet");
-                infoWriter.Close();
-                Console.Write("added ");
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write(commands[1]);
-                Console.ForegroundColor = ConsoleColor.Gray;
-                Console.WriteLine(" to zoom bot");
+                if (platform == "zoom"){
+                    infoWriter.Write("\n" + commands[1] + ":" + commands[2] + ":" + commands[3] + ":zoom");
+                    infoWriter.Close();
+                    Console.Write("added ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(commands[1]);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine(" to zoom bot");
+                } else if(platform == "gmeet"){
+                    infoWriter.Write("\n" + commands[1] + ":" + commands[2] + ":gmeet");
+                    infoWriter.Close();
+                    Console.Write("added ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(commands[1]);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine(" to meet bot");
+                }
+
             }
         }
         static void removeMeetingEntry(string meetingName,string path){
@@ -387,8 +403,8 @@ namespace backend
                     writableInfo.Add(item);
                 }
             }
-            foreach (string item in info.ToArray()){
-                infoWriter.Write(writableInfo);
+            foreach (string item in writableInfo.ToArray()){
+                infoWriter.Write(item);
             }
             infoWriter.Close();
             Console.Write("removed ");
@@ -398,41 +414,42 @@ namespace backend
         }
         static void listMeetingEntries(string path,string[] commands){
             StreamReader infoReader = new StreamReader(path + @"\backend\txts\info.txt");
-            infoReader.Close();
             int counter;
-            if (commands[1] == "zoom"){
-                Console.WriteLine("meeting name - meeting id - meeting pass");
-                Console.WriteLine();
-                counter = 1;
-                foreach (string item in infoReader.ReadToEnd().Split("\n"))
-                {
-                    string[] items = item.Split(":");
-                    if (items[3] == "zoom"){
-                        Console.Write(counter + ". ");
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(items[0] + " ");
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                        Console.WriteLine(items[1] + " " + items[2] + "\n");
-                        counter++;
+            try {
+                if (commands[1] == "zoom"){
+                    Console.WriteLine("meeting name - meeting id - meeting pass");
+                    Console.WriteLine();
+                    counter = 1;
+                    foreach (string item in infoReader.ReadToEnd().Split("\n"))
+                    {
+                        string[] items = item.Split(":");
+                        if (items[3] == "zoom"){
+                            Console.Write(counter + ". ");
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write(items[0] + " ");
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                            Console.WriteLine(items[1] + " " + items[2] + "\n");
+                            counter++;
+                        }
+                    }
+                } else if (commands[1] == "gmeet"){
+                    Console.WriteLine("meeting name - meeting id ");
+                    Console.WriteLine();
+                    counter = 1;
+                    foreach (string item in infoReader.ReadToEnd().Split("\n"))
+                    {
+                        string[] items = item.Split(":");
+                        if (items[3] == "gmeet"){
+                            Console.Write(counter + ". ");
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write(items[0] + " ");
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                            Console.WriteLine(items[1] + "\n");
+                            counter++;
+                        }
                     }
                 }
-            } else if (commands[1] == "gmeet"){
-                Console.WriteLine("meeting name - meeting id ");
-                Console.WriteLine();
-                counter = 1;
-                foreach (string item in infoReader.ReadToEnd().Split("\n"))
-                {
-                    string[] items = item.Split(":");
-                    if (items[3] == "gmeet"){
-                        Console.Write(counter + ". ");
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(items[0] + " ");
-                        Console.ForegroundColor = ConsoleColor.Gray;
-                        Console.WriteLine(items[1] + "\n");
-                        counter++;
-                    }
-                }
-            } else {
+            } catch (IndexOutOfRangeException) {
                 Console.WriteLine("meeting name - meeting id - meeting pass");
                 Console.WriteLine();
                 counter = 1;
@@ -443,10 +460,15 @@ namespace backend
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(items[0] + " ");
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.WriteLine(items[1] + "\n");
+                    if (items[2] == "gmeet"){
+                        Console.WriteLine(items[1] + "\n");
+                    } else {
+                        Console.WriteLine(items[1] + " " + items[2] + "\n");
+                    }
                     counter++;
                 }
             }
+            infoReader.Close();
             
         }   
     }
