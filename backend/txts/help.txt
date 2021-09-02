@@ -6,7 +6,9 @@ mario react [name]      initialize a reactjs project at the current working dire
 mario install           install a nodejs package 
 mario make [name]       create an empty file (similar to ls in linux)
 mario expo [name]       initialize an expo project at the current working directory
-mario join [name]       execute zoom bot and join a meeting
+mario join [name]       execute zoom bot or meet bot and join a meeting
 mario terminate         terminate the machine
 mario todo [task]       to add a task in the built-in marioTasks
 mario done [task index] to remove a task from marioTasks
+mario configure zoom    to configure zoom bot 
+mario configure gmeet   to configure meet bot

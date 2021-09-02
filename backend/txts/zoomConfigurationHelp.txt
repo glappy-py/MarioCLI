@@ -2,8 +2,11 @@ commands - function
 
 add [meeting name] [meeting id] [meeting password]   add a new meeting entry to zoom bot
 
-remove [meeting name]                                remove a meeting entry from zoom 
+remove [meeting name]                                remove a meeting entry
 
 gui                                                  open a GUI based zoom bot configuration panel
 
+list [platform]                                      display the list of meeting entries of meeting platform(ex. zoom,Gmeet)
+
 exit                                                 exit configuration panel and marioCLI
+
