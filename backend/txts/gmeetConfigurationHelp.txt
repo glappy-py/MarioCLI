@@ -4,8 +4,6 @@ add [meeting name] [meeting id]                      add a new meeting entry to 
 
 remove [meeting name]                                remove a meeting entry
 
-gui                                                  open a GUI based meet bot configuration panel
-
 list                                                 display the list of meeting entries
 
 exit                                                 exit configuration panel and marioCLI

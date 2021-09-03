@@ -8,6 +8,7 @@ namespace backend
 {
     class Program
     {
+        // TODO: If I face some copyright issues then I'll change this project's name to spideyCLI
         // TODO: make a gitbook about mario 
         // TODO: make a command "mario about" which takes the user to marioCLI's gitbook
         // TODO: make a command "mario report" which the user can use to report a bug or suggest something
@@ -196,10 +197,12 @@ namespace backend
             startInfo.Arguments = "/c cd /d \"" + cwd + "\" && npx create-react-app " + directoryName + " && cd " + directoryName;
             process.StartInfo = startInfo;
             process.Start();
+            Console.WriteLine();
+            Console.Write("initializing ");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("ReactJS");
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine(" project initialized, happy coding");
+            Console.WriteLine(" project");
         }
         static void installNPMPackage(string cwd,string[] args){
             foreach (string package in args)
@@ -313,9 +316,6 @@ namespace backend
             Console.Write("command : ");
             string[] commands = Console.ReadLine().Split(" ");
             if(commands[0] == "exit"){
-            } else if (commands[0] == "gui"){
-                Console.WriteLine("opening zoom bot configuration panel");
-                gmeetConfigurationPanel(path);
             } else if (commands[0] == "add"){
                 addNewMeetingEntry(commands,path,"gmeet");
                 gmeetConfigurationPanel(path);
@@ -335,9 +335,6 @@ namespace backend
             Console.Write("command : ");
             string[] commands = Console.ReadLine().Split(" ");
             if(commands[0] == "exit"){
-            } else if (commands[0] == "gui"){
-                Console.WriteLine("opening zoom bot configuration panel");
-                zoomConfigurationPanel(path);
             } else if (commands[0] == "add"){
                 addNewMeetingEntry(commands,path,"zoom");
                 zoomConfigurationPanel(path);
@@ -454,6 +451,6 @@ namespace backend
             }
             infoReader.Close();
             
-        }   
+        } 
     }
 }

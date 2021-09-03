@@ -1,3 +1,4 @@
 .vscode
 backend/bin
 backend/obj
+backend/.vs
