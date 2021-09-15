@@ -17,11 +17,9 @@ namespace backend
         // Arg conditions
         static void Main(string[] args)
         {
-            
-            System.Diagnostics.Debug.WriteLine("ok");
             List<string> TempArgs = new List<string>(args);
             string path = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            path = path.Remove(19);
+            path = path.Remove(path.IndexOf("backend"));
             string cwd = Directory.GetCurrentDirectory();
             cwd = cwd + @"\";
             if (TempArgs.Count > 0){
@@ -241,7 +239,7 @@ namespace backend
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/c cd /d \"" + path + @"\backend" + "\" && python zoombot.py " + args[0];
+            startInfo.Arguments = "/c cd /d \"" + path + @"\backend" + "\" && zoombot.exe " + args[0];
             process.StartInfo = startInfo;
             process.Start();
         }
