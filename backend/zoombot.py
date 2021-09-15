@@ -42,10 +42,7 @@ id , npass , name = manualJoin(userInput)
 if not(checkIfProcessRunning('zoom')):
 		startfile(zoompath)
 
-while not(checkIfProcessRunning('zoom')):
-    pass
-
-sleep(2)
+sleep(1)
 
 webbrowser.open(f"zoommtg://zoom.us/join?zc=0&confno={id}&pwd={npass}")
 
