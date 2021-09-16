@@ -1,3 +1,5 @@
-# MarioCLI [under construction]
+# MarioCLI
 
-perfect utility tool for programmers
+Perfect utility tool for programmers <br>
+Download and install from releases <br>
+Installation instructions included inside release package <br>
